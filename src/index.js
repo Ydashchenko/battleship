@@ -1,19 +1,22 @@
 import _ from 'lodash'
 import './style.css'
 
-function Ship(length) {
+export function Ship(length) {
     return {
-        length,
+        length: length,
         howManyHits: 0,
         beenSunk: false,
-        hit: () => {
-            howManyHits += 1
+        hit: function () {
+            this.howManyHits += 1
         },
-        isSunk: () => {
-            if (howManyHits >= length) {
-                beenSunk = true
+        isSunk: function () {
+            if (this.howManyHits >= length) {
+                this.beenSunk = true
+            } else {
+                this.beenSunk = false
             }
+            return this.beenSunk
         }
-
     }
 }
+
