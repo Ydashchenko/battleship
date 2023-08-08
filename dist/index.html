@@ -7,6 +7,40 @@
     <script defer src="main.js"></script>
 </head>
 <body>
-    
+    <header>
+        <h1>Battleship</h1>
+    </header>
+
+    <main>
+        <div id="labels">
+            <h2>You</h2>
+            <button id="start-btn">Start battle!</button>
+            <h2>AI</h2>
+        </div>
+        <div id="boards">
+            <div id="my-ships">
+
+            </div>
+            <div class="gameboard" id="player-board">
+
+            </div>
+            <div class="gameboard" id="computer-board">
+
+            </div>
+        </div>
+        <div id="announcement">
+            <h1>Someone won!</h1>
+            <button id="replay-btn">Play again</button>
+        </div>
+    </main>
+
+    <footer>
+        Copyright ©
+        <script>
+            document.write(new Date().getFullYear())
+        </script>
+        <a href="https://github.com/Ydashchenko" target="_blank">Yevhenii Dashchenko</a>
+        <a href="https://github.com/Ydashchenko" target="_blank"><img src="../src/images/white-gh.jpeg" alt="github-logo" class="icon"></a>
+    </footer>
 </body>
 </html>

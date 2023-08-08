@@ -83,11 +83,25 @@ function Player() {
     return { randomAttack };
 }
 
+function buildBoard(player) {
+    const playerBoard = document.getElementById(`${player}-board`)
 
+    for (let i = 9; i > 0; i--) {
+        const column = document.createElement('div')
+        column.classList.add('column')
+        playerBoard.appendChild(column)
+        for (let j = 0; j < 10; j++) {
+            const cell = document.createElement('div')
+            cell.classList.add('cell')
+            cell.dataset.x = i
+            cell.dataset.y = j
+            column.appendChild(cell)
+        }
+    }
+}
 
-
-
-
+buildBoard('player')
+buildBoard('computer')
 
 
 
