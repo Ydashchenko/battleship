@@ -55,6 +55,17 @@ export function Gameboard() {
         }
     }
 
+    function receiveAttack(x, y) {
+        if (board[x][y]) {
+            const ship = board[x][y];
+            ship.hit();
+            return true;
+          } else {
+            missedAttacks.push({ x, y });
+            return false;
+          }
+    }
+
 
 }
 
