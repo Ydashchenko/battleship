@@ -73,7 +73,15 @@ export function Gameboard() {
     return { placeShip, receiveAttack, allShipsSunk, missedAttacks };
 }
 
-
+function Player() {
+    function randomAttack() {
+        const x = Math.floor(Math.random() * 10);
+        const y = Math.floor(Math.random() * 10);
+        return { x, y };
+    }
+    
+    return { randomAttack };
+}
 
 
 
