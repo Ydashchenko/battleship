@@ -60,13 +60,17 @@ export function Gameboard() {
             const ship = board[x][y];
             ship.hit();
             return true;
-          } else {
+        } else {
             missedAttacks.push({ x, y });
             return false;
-          }
+        }
     }
 
-
+    function allShipsSunk() {
+        return board.flat().every((cell) => cell === null || cell.isSunk());
+    }
+    
+    return { placeShip, receiveAttack, allShipsSunk, missedAttacks };
 }
 
 
