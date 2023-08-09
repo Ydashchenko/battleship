@@ -86,7 +86,7 @@ function Player() {
 function buildBoard(player) {
     const playerBoard = document.getElementById(`${player}-board`)
 
-    for (let i = 9; i > 0; i--) {
+    for (let i = 9; i > -1; i--) {
         const column = document.createElement('div')
         column.classList.add('column')
         playerBoard.appendChild(column)
@@ -102,6 +102,8 @@ function buildBoard(player) {
 
 buildBoard('player')
 buildBoard('computer')
+
+
 
 
 

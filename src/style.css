@@ -24,6 +24,10 @@ h2, button {
     font-size: 30px;
 }
 
+#axis {
+    font-size: 20px;
+}
+
 #labels, #boards, #announcement {
     padding: 20px;
 }
@@ -38,7 +42,7 @@ h2, button {
 }
 
 #announcement {
-    display: grid;
+    display: none;
     justify-items: center;
     gap: 20px;
 }
@@ -65,7 +69,7 @@ label {
 .cell {
     width: 30px;
     height: 30px;
-    border: 1px black solid;
+    border: 1px rgb(15, 0, 115) solid;
 }
 
 footer, header  {
