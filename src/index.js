@@ -25,6 +25,13 @@ export function Gameboard() {
     const board = new Array(boardSize).fill(null).map(() => new Array(boardSize).fill(null))
     const missedAttacks = []
 
+    const shipCounts = {
+        1: 4,
+        2: 3,
+        3: 2,
+        4: 1
+    }
+
     let isHorizontal = true
     let pickedShipLength = 0
 
@@ -78,6 +85,10 @@ export function Gameboard() {
             }
         }
         
+        this.shipCounts[this.pickedShipLength] -= 1;
+        if (this.shipCounts[this.pickedShipLength] === 0) {
+            this.pickedShipLength = 0; // Reset picked ship length
+        }
     }
 
     function receiveAttack(x, y) {
@@ -95,7 +106,7 @@ export function Gameboard() {
         return board.flat().every((cell) => cell === null || cell.isSunk());
     }
     
-    return { placeShip, receiveAttack, allShipsSunk, missedAttacks, toggleAxis, pickShip, pickedShipLength, isHorizontal };
+    return { placeShip, receiveAttack, allShipsSunk, missedAttacks, toggleAxis, pickShip, pickedShipLength, isHorizontal, shipCounts };
 }
 
 function Player() {
@@ -160,7 +171,7 @@ function init() {
 
     const myCells = document.querySelectorAll('.my-cell')
     myCells.forEach(cell => cell.addEventListener('click', () => 
-        playerGameBoard.placeShip(Ship(playerGameBoard.pickedShipLength), cell.dataset.x, cell.dataset.y, playerGameBoard.isHorizontal)))
+        playerGameBoard.placeShip(Ship(playerGameBoard.pickedShipLength), parseInt(cell.dataset.x), parseInt(cell.dataset.y), playerGameBoard.isHorizontal)))
 }
 
 function focusShip(ship) {
@@ -174,22 +185,3 @@ function focusShip(ship) {
     });
 }
 
-    /*
-    let battleShips = {
-        carrier: {
-            quantity: 1,
-            length: 4
-        },
-        destroyer: {
-            quantity: 2,
-            length: 3
-        },
-        submarine: {
-            quantity: 3,
-            length: 2
-        },
-        boat: {
-            quantity: 4,
-            length: 1
-        }
-    } */
