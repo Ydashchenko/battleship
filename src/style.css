@@ -71,13 +71,18 @@ label {
 }
 
 .ship-shape {
-    border: solid 3px rgb(15, 0, 115);
+    border: solid 2px ghostwhite;
+    background-color: rgb(15, 0, 115);
 }
 
-.cell, .my-cell {
+.cell, .my-cell, .ship-cell {
     width: 30px;
     height: 30px;
     border: 1px rgb(15, 0, 115) solid;
+}
+
+.ship-cell {
+    border: solid 2px ghostwhite;
 }
 
 footer, header  {

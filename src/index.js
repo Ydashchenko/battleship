@@ -35,8 +35,13 @@ export function Gameboard() {
     let isHorizontal = true
     let pickedShipLength = 0
 
-    function pickShip(length) {
+    function pickShip(length, ship) {
+        if (this.ships[length] == 0) {
+            alert('No such ships anymore.')
+            return  
+        }
         this.pickedShipLength = length
+        focusShip(ship)
         console.log(this.pickedShipLength)
     }
 
@@ -157,19 +162,19 @@ function init() {
     axisBtn.addEventListener('click', playerGameBoard.toggleAxis)
 
     const carrier = document.getElementById('carrier')
-    carrier.addEventListener('click', () => playerGameBoard.pickShip(4))
+    carrier.addEventListener('click', () => playerGameBoard.pickShip(4, carrier))
 
     const cruiser = document.getElementById('cruiser')
-    cruiser.addEventListener('click', () => playerGameBoard.pickShip(3))
+    cruiser.addEventListener('click', () => playerGameBoard.pickShip(3, cruiser))
 
     const submarine = document.getElementById('submarine')
-    submarine.addEventListener('click', () => playerGameBoard.pickShip(2))
+    submarine.addEventListener('click', () => playerGameBoard.pickShip(2, submarine))
 
     const destroyer = document.getElementById('destroyer')
-    destroyer.addEventListener('click', () => playerGameBoard.pickShip(1))
+    destroyer.addEventListener('click', () => playerGameBoard.pickShip(1, destroyer))
 
-    const allShipTypes = document.querySelectorAll('.ship')
-    allShipTypes.forEach(ship => ship.addEventListener('click', () => focusShip(ship)))
+    //const allShipTypes = document.querySelectorAll('.ship')
+    //allShipTypes.forEach(ship => ship.addEventListener('click', () => focusShip(ship)))
 
     const myCells = document.querySelectorAll('.my-cell')
     myCells.forEach(cell => cell.addEventListener('click', () => 
@@ -181,6 +186,7 @@ function init() {
 function focusShip(ship) {
     const allShipTypes = document.querySelectorAll('.ship');
     allShipTypes.forEach((s) => {
+        console.log(s)
         if (s === ship) {
             s.style.border = 'solid 2px rgb(15, 0, 115)';
         } else {
@@ -191,10 +197,16 @@ function focusShip(ship) {
 
 function updateShipCounters(gameBoard) {
     const counters = document.querySelectorAll('.counter');
-    console.log(counters[0])
-    console.log(gameBoard.ships)
-    counters.forEach((counter, c) => {
-        counter.innerHTML = `x${gameBoard.ships[c + 1]}`;
-    }); 
+    const allShipTypes = document.querySelectorAll('.ship');
+    
+    counters.forEach((counter, index) => {
+        const shipCount = gameBoard.ships[index + 1];
+        counter.innerHTML = `x${shipCount}`;
+        
+        if (shipCount === 0) {
+            allShipTypes[index].style.border = 'none';
+        }
+    });
 }
+
 
