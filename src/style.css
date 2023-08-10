@@ -83,7 +83,7 @@ label {
 }
 
 .ship-cell {
-    border: solid 2px ghostwhite;
+    background-color: rgb(15, 0, 115);
 }
 
 footer, header  {
