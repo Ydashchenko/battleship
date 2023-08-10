@@ -66,11 +66,12 @@ label {
     align-items: center;
 }
 
-.column, .ship-shape {
+.gameboard {
     display: flex;
 }
 
 .ship-shape {
+    display: flex;
     border: solid 2px ghostwhite;
     background-color: rgb(15, 0, 115);
 }
