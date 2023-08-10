@@ -25,11 +25,11 @@ export function Gameboard() {
     const board = new Array(boardSize).fill(null).map(() => new Array(boardSize).fill(null))
     const missedAttacks = []
 
-    const shipCounts = {
-        1: 4,
-        2: 3,
+    const ships = {
+        4: 1,
         3: 2,
-        4: 1
+        2: 3,
+        1: 4
     }
 
     let isHorizontal = true
@@ -85,10 +85,12 @@ export function Gameboard() {
             }
         }
         
-        this.shipCounts[this.pickedShipLength] -= 1;
-        if (this.shipCounts[this.pickedShipLength] === 0) {
-            this.pickedShipLength = 0; // Reset picked ship length
+        this.ships[this.pickedShipLength] -= 1;
+        if (this.ships[this.pickedShipLength] === 0) {
+            this.pickedShipLength = 0
         }
+
+        updateShipCounters(this)
     }
 
     function receiveAttack(x, y) {
@@ -106,7 +108,7 @@ export function Gameboard() {
         return board.flat().every((cell) => cell === null || cell.isSunk());
     }
     
-    return { placeShip, receiveAttack, allShipsSunk, missedAttacks, toggleAxis, pickShip, pickedShipLength, isHorizontal, shipCounts };
+    return { placeShip, receiveAttack, allShipsSunk, missedAttacks, toggleAxis, pickShip, pickedShipLength, isHorizontal, ships };
 }
 
 function Player() {
@@ -172,6 +174,8 @@ function init() {
     const myCells = document.querySelectorAll('.my-cell')
     myCells.forEach(cell => cell.addEventListener('click', () => 
         playerGameBoard.placeShip(Ship(playerGameBoard.pickedShipLength), parseInt(cell.dataset.x), parseInt(cell.dataset.y), playerGameBoard.isHorizontal)))
+
+    console.log(playerGameBoard.ships)
 }
 
 function focusShip(ship) {
@@ -183,5 +187,14 @@ function focusShip(ship) {
             s.style.border = 'none';
         }
     });
+}
+
+function updateShipCounters(gameBoard) {
+    const counters = document.querySelectorAll('.counter');
+    console.log(counters[0])
+    console.log(gameBoard.ships)
+    counters.forEach((counter, c) => {
+        counter.innerHTML = `x${gameBoard.ships[c + 1]}`;
+    }); 
 }
 

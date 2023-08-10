@@ -66,8 +66,12 @@ label {
     align-items: center;
 }
 
-.column {
+.column, .ship-shape {
     display: flex;
+}
+
+.ship-shape {
+    border: solid 3px rgb(15, 0, 115);
 }
 
 .cell, .my-cell {
