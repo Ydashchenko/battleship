@@ -55,3 +55,8 @@ export function buildBoard(player) {
         }
     }
 }
+
+export function clearGrid() {
+    const myCells = document.querySelectorAll('.my-cell')
+    myCells.forEach(cell => cell.classList.remove('ship-cell'))
+}

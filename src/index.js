@@ -18,7 +18,7 @@ export function init() {
     buildBoard('player')
     buildBoard('computer')
     addEventListeners()
-    computerBoard.placeAllShipsRandomly()
+    computerBoard.placeAllShipsRandomly('cell')
     
 }
 
@@ -28,9 +28,10 @@ export function startBattle() {
         return
     }
     
+    
 }
 
 
 init()
 
-export { playerBoard }
+export { playerBoard, computerBoard}

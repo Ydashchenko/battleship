@@ -1,12 +1,13 @@
 import { playerBoard } from '..';
-import { focusShip, renderAvailableShips, updateAxisBtn, buildBoard } from './dom-manipulation';
+import { focusShip, renderAvailableShips, updateAxisBtn, buildBoard, clearGrid } from './dom-manipulation';
 import { addEventListeners } from './event-listeners';
 import { Ship, setCurrentLength, currentLength } from './ship';
 
 
 export function GameBoard() {
     const boardSize = 10;
-    const board = new Array(boardSize).fill(null).map(() => new Array(boardSize).fill(null));
+    let board = new Array(boardSize).fill(null).map(() => new Array(boardSize).fill(null));
+    const missedShots = []
 
     const ships = {
         1: 4,
@@ -17,7 +18,7 @@ export function GameBoard() {
 
     let isHorizontal = true
 
-    function placeShip(who, ship, x, y) {
+    function placeShip(rand, who, ship, x, y) {
         if (currentLength == 0) {
             alert('Pick a ship!')
             return
@@ -48,13 +49,13 @@ export function GameBoard() {
             }
             const cell = document.querySelector(`.${who}[data-x="${x + (isHorizontal ? l : 0)}"][data-y="${y + (isHorizontal ? 0 : l)}"]`);
             cell.classList.add('ship-cell'); 
-            console.log(board)
+            
         }
 
         console.log(`${ship.length} ship has been placed.`)
         
 
-        if (who === 'my-cell') {
+        if (rand === false) {
             ships[currentLength] -= 1
         }
         renderAvailableShips()
@@ -85,7 +86,9 @@ export function GameBoard() {
         return Math.random() < 0.5;
     }
 
-    function placeAllShipsRandomly() {
+    function placeAllShipsRandomly(who) {
+        board = new Array(boardSize).fill(null).map(() => new Array(boardSize).fill(null));
+        clearGrid()
         for (const length in ships) {
             for (let count = 0; count < ships[length]; count++) {
                 isHorizontal = getRandomBoolean()
@@ -98,11 +101,12 @@ export function GameBoard() {
                 } while (!canPlaceShip(ship, x, y));
     
                 setCurrentLength(parseInt(length)); // Set the currentLength
-                placeShip('cell', ship, x, y);
+                placeShip(true, who, ship, x, y);
             }
         }
         setCurrentLength(0)
         isHorizontal = true
+
     }
 
 

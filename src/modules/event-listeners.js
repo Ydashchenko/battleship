@@ -1,7 +1,8 @@
-import { playerBoard, startBattle } from '..';
+import { playerBoard, computerBoard, startBattle, playerPlayer, aiPlayer } from '..';
 import { focusShip, renderAvailableShips, updateAxisBtn, buildBoard } from './dom-manipulation';
 import { Ship, setCurrentLength, currentLength } from './ship';
 import { GameBoard } from "./game-board";
+import { random } from 'lodash';
 
 export function addEventListeners() {
     const axisBtn = document.getElementById('axis')
@@ -20,8 +21,11 @@ export function addEventListeners() {
     carrier.addEventListener('click', () => setCurrentLength(4, carrier))
 
     const myCells = document.querySelectorAll('.my-cell')
-    myCells.forEach(cell => cell.addEventListener('click', () => playerBoard.placeShip('my-cell', Ship(currentLength), parseInt(cell.dataset.x), parseInt(cell.dataset.y))))
+    myCells.forEach(cell => cell.addEventListener('click', () => playerBoard.placeShip(false, 'my-cell', Ship(currentLength), parseInt(cell.dataset.x), parseInt(cell.dataset.y))))
 
     const startBtn = document.getElementById('start-btn')
     startBtn.addEventListener('click', () =>  startBattle())
+
+    const randomPlace = document.getElementById('random-place')
+    randomPlace.addEventListener('click', () => computerBoard.placeAllShipsRandomly('my-cell'))
 }
