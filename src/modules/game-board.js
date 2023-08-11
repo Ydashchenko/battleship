@@ -17,7 +17,7 @@ export function GameBoard() {
 
     let isHorizontal = true
 
-    function placeShip(ship, x, y) {
+    function placeShip(who, ship, x, y) {
         if (currentLength == 0) {
             alert('Pick a ship!')
             return
@@ -25,7 +25,7 @@ export function GameBoard() {
 
         if (ships[currentLength] == 0) {
             alert(`You're out of ${currentLength}-length ships!`)
-            currentLength = 0
+            
             return
         }
 
@@ -46,7 +46,7 @@ export function GameBoard() {
             if (!isHorizontal) {
                 board[x][y + l] = ship;
             }
-            const cell = document.querySelector(`.my-cell[data-x="${x + (isHorizontal ? l : 0)}"][data-y="${y + (isHorizontal ? 0 : l)}"]`);
+            const cell = document.querySelector(`.${who}[data-x="${x + (isHorizontal ? l : 0)}"][data-y="${y + (isHorizontal ? 0 : l)}"]`);
             cell.classList.add('ship-cell'); 
             console.log(board)
         }
@@ -54,7 +54,9 @@ export function GameBoard() {
         console.log(`${ship.length} ship has been placed.`)
         
 
-        ships[currentLength] -= 1
+        if (who === 'my-cell') {
+            ships[currentLength] -= 1
+        }
         renderAvailableShips()
     }
 
@@ -64,11 +66,66 @@ export function GameBoard() {
         console.log(`IsHorizontal? ${isHorizontal}`)
     }
 
+    function areAllShipsPlaced() {
+        for (const shipCount of Object.values(ships)) {
+            if (shipCount !== 0) {
+                return false; // At least one ship is not placed
+            }
+        }
+        return true; // All ships are placed
+    }
+
+    function getRandomCoordinates() {
+        const x = Math.floor(Math.random() * 10);
+        const y = Math.floor(Math.random() * 10);
+        return { x, y }
+    }
+
+    function getRandomBoolean() {
+        return Math.random() < 0.5;
+    }
+
+    function placeAllShipsRandomly() {
+        for (const length in ships) {
+            for (let count = 0; count < ships[length]; count++) {
+                isHorizontal = getRandomBoolean()
+                console.log(isHorizontal)
+                let ship;
+                let x, y;
+                do {
+                    ({ x, y } = getRandomCoordinates());
+                    ship = Ship(parseInt(length));
+                } while (!canPlaceShip(ship, x, y));
+    
+                setCurrentLength(parseInt(length)); // Set the currentLength
+                placeShip('cell', ship, x, y);
+            }
+        }
+        setCurrentLength(0)
+        isHorizontal = true
+    }
+
+
+    function canPlaceShip(ship, x, y) {
+        for (let l = 0; l < ship.length; l++) {
+            if (
+                (isHorizontal && (x + l >= boardSize || board[x + l][y] !== null)) ||
+                (!isHorizontal && (y + l >= boardSize || board[x][y + l] !== null))
+            ) {
+                return false; // Cannot place ship at this position
+            }
+        }
+        return true; // Can place ship at this position
+    }
+
     return {
         ships,
         board,
         placeShip,
-        toggleIsHorizontal
+        toggleIsHorizontal,
+        areAllShipsPlaced,
+        getRandomCoordinates,
+        placeAllShipsRandomly
     };
 }
 

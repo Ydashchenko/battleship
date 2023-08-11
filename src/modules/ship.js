@@ -1,7 +1,7 @@
-import { playerBoard } from '..';
 import { focusShip, renderAvailableShips, updateAxisBtn, buildBoard } from './dom-manipulation';
 import { addEventListeners } from './event-listeners';
 import { GameBoard } from "./game-board";
+import { playerBoard } from '..';
 
 let currentLength = 0
 
@@ -27,6 +27,7 @@ export function Ship(length) {
 export function setCurrentLength(value, ship) {
     if (playerBoard.ships[value] == 0) {
         alert(`You're out of ${value}-length ships!`)
+        currentLength = 0
         return
     }
     currentLength = value

@@ -12,15 +12,24 @@ import {
 
 
 let playerBoard = GameBoard();
+let computerBoard = GameBoard()
 
 export function init() {
     buildBoard('player')
     buildBoard('computer')
     addEventListeners()
-    return {
-        playerBoard
-    }
+    computerBoard.placeAllShipsRandomly()
+    
 }
+
+export function startBattle() {
+    if (!playerBoard.areAllShipsPlaced()) {
+        alert('Place all your ships!')
+        return
+    }
+    
+}
+
 
 init()
 
