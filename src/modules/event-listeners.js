@@ -27,5 +27,5 @@ export function addEventListeners() {
     startBtn.addEventListener('click', () =>  startBattle())
 
     const randomPlace = document.getElementById('random-place')
-    randomPlace.addEventListener('click', () => computerBoard.placeAllShipsRandomly('my-cell'))
+    randomPlace.addEventListener('click', () => playerBoard.placeAllShipsRandomly('my-cell'))
 }

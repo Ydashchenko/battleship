@@ -60,3 +60,20 @@ export function clearGrid() {
     const myCells = document.querySelectorAll('.my-cell')
     myCells.forEach(cell => cell.classList.remove('ship-cell'))
 }
+
+/*
+export function hideShipPick() {
+    const els = Array.from(document.getElementById('my-ships').childNodes)
+        .filter(el => el.nodeType === Node.ELEMENT_NODE); // Filter out text nodes
+    els.forEach(el => el.style.display = 'none');
+    const rnd = document.getElementById('random-place');
+    rnd.style.display = 'block';
+}
+*/
+
+export function setCountersToZero() {
+    const counters = document.querySelectorAll('.counter')
+    counters.forEach(counter => {
+        counter.innerHTML = 'x0'
+    })
+}

@@ -1,5 +1,5 @@
 import { playerBoard } from '..';
-import { focusShip, renderAvailableShips, updateAxisBtn, buildBoard, clearGrid } from './dom-manipulation';
+import { focusShip, renderAvailableShips, updateAxisBtn, buildBoard, clearGrid, hideShipPick, setCountersToZero } from './dom-manipulation';
 import { addEventListeners } from './event-listeners';
 import { Ship, setCurrentLength, currentLength } from './ship';
 
@@ -9,7 +9,7 @@ export function GameBoard() {
     let board = new Array(boardSize).fill(null).map(() => new Array(boardSize).fill(null));
     const missedShots = []
 
-    const ships = {
+    let ships = {
         1: 4,
         2: 3,
         3: 2,
@@ -58,6 +58,7 @@ export function GameBoard() {
         if (rand === false) {
             ships[currentLength] -= 1
         }
+
         renderAvailableShips()
     }
 
@@ -89,6 +90,12 @@ export function GameBoard() {
     function placeAllShipsRandomly(who) {
         board = new Array(boardSize).fill(null).map(() => new Array(boardSize).fill(null));
         clearGrid()
+        ships = {
+            1: 4,
+            2: 3,
+            3: 2,
+            4: 1
+        }
         for (const length in ships) {
             for (let count = 0; count < ships[length]; count++) {
                 isHorizontal = getRandomBoolean()
@@ -100,15 +107,25 @@ export function GameBoard() {
                     ship = Ship(parseInt(length));
                 } while (!canPlaceShip(ship, x, y));
     
-                setCurrentLength(parseInt(length)); // Set the currentLength
+                setCurrentLength(parseInt(length));
                 placeShip(true, who, ship, x, y);
             }
         }
         setCurrentLength(0)
         isHorizontal = true
-
+        ships = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0
+        }
+        console.log(ships)
+        if (who === 'my-cell') {
+            setCountersToZero()
+        }
+        
+        
     }
-
 
     function canPlaceShip(ship, x, y) {
         for (let l = 0; l < ship.length; l++) {
@@ -116,10 +133,10 @@ export function GameBoard() {
                 (isHorizontal && (x + l >= boardSize || board[x + l][y] !== null)) ||
                 (!isHorizontal && (y + l >= boardSize || board[x][y + l] !== null))
             ) {
-                return false; // Cannot place ship at this position
+                return false; 
             }
         }
-        return true; // Can place ship at this position
+        return true; 
     }
 
     return {

@@ -7,7 +7,8 @@ import {
     focusShip,
     renderAvailableShips,
     updateAxisBtn,
-    buildBoard
+    buildBoard,
+    hideShipPick
 } from './modules/dom-manipulation';
 
 
