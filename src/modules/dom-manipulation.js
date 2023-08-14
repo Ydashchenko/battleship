@@ -31,6 +31,7 @@ export function updateAxisBtn(isHorizontal) {
 
 export function buildBoard(player) {
     const playerBoard = document.getElementById(`${player}-board`);
+    playerBoard.innerHTML = ''
     let cellClass;
     if (player === 'player') {
         cellClass = 'my-cell';
@@ -73,4 +74,26 @@ export function setCountersToZero() {
     counters.forEach(counter => {
         counter.innerHTML = 'x0'
     })
+}
+
+export function changeDOMtoBattleMode() {
+    const myShips = document.getElementById('my-ships')
+    myShips.style.display = 'none'
+    const boards = document.getElementById('boards')
+    boards.style.gridTemplateColumns = '1fr 1fr'
+    const restartBtn = document.getElementById('restart-btn')
+    restartBtn.style.display = 'block'
+    const startBtn = document.getElementById('start-btn')
+    startBtn.style.display = 'none'
+}
+
+export function changeDOMtoPrepareMode() {
+    const myShips = document.getElementById('my-ships')
+    myShips.style.display = 'grid'
+    const boards = document.getElementById('boards')
+    boards.style.gridTemplateColumns = '1fr auto 1fr'
+    const restartBtn = document.getElementById('restart-btn')
+    restartBtn.style.display = 'none'
+    const startBtn = document.getElementById('start-btn')
+    startBtn.style.display = 'block'
 }

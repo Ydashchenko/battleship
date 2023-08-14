@@ -1,4 +1,4 @@
-import { playerBoard, startBattle } from '..';
+import { playerBoard, startBattle, restartBattle } from '..';
 import { Ship} from './ship';
 
 export function addEventListeners() {
@@ -20,9 +20,15 @@ export function addEventListeners() {
     const startBtn = document.getElementById('start-btn')
     startBtn.addEventListener('click', () =>  startBattle())
 
+    const restartBtn = document.getElementById('restart-btn')
+    restartBtn.addEventListener('click', () => restartBattle())
+
     const randomPlace = document.getElementById('random-place')
     randomPlace.addEventListener('click', () => playerBoard.placeAllShipsRandomly('my-cell'))
 
+}
+
+export function addPlaceShipEventListeners() {
     const myCells = document.querySelectorAll('.my-cell')
     myCells.forEach(cell => cell.addEventListener('click', () => {
         const x = parseInt(cell.dataset.x);

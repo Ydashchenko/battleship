@@ -139,7 +139,6 @@ export function GameBoard() {
             return currentLength = 0
             
         }
-        console.log(`Now current length is ${currentLength}`)
         focusShip(ship)
         return currentLength = value
     }
