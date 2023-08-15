@@ -97,3 +97,27 @@ export function changeDOMtoPrepareMode() {
     const startBtn = document.getElementById('start-btn')
     startBtn.style.display = 'block'
 }
+
+export function addHit(hitX, hitY, who) {
+    const cells = document.querySelectorAll(`.${who}`) 
+    cells.forEach(cell => {
+        if (cell.dataset.x == hitX && cell.dataset.y == hitY) {
+            cell.innerHTML = 'x'
+        }
+    })
+}
+
+export function addMiss(missX, missY, who) {
+    const cells = document.querySelectorAll(`.${who}`) 
+    cells.forEach(cell => {
+        if (cell.dataset.x == missX && cell.dataset.y == missY) {
+            cell.classList.add('missed')
+        }
+    })
+}
+
+export function updateAnnounce(message) {
+    const info = document.getElementById('info')
+    info.innerHTML = message
+}
+
