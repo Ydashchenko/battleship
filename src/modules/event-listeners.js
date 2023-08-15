@@ -46,6 +46,6 @@ export function addAttackAIEventListeners() {
         let x = cell.dataset.x
         let y = cell.dataset.y
         you.attack(x, y, computerBoard)
-        computer.randomAttack(playerBoard)
+        setTimeout(computer.randomAttack, 1000, playerBoard)
     }));
 }

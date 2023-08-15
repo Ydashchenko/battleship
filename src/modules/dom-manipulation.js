@@ -102,7 +102,7 @@ export function addHit(hitX, hitY, who) {
     const cells = document.querySelectorAll(`.${who}`) 
     cells.forEach(cell => {
         if (cell.dataset.x == hitX && cell.dataset.y == hitY) {
-            cell.innerHTML = 'x'
+            cell.innerHTML = 'X'
         }
     })
 }
