@@ -1,5 +1,6 @@
-import { playerBoard, startBattle, restartBattle } from '..';
-import { Ship} from './ship';
+import { playerBoard, startBattle, restartBattle, computerBoard, you, computer } from '..';
+import { Ship } from './ship';
+import { player } from './player';
 
 export function addEventListeners() {
     const axisBtn = document.getElementById('axis')
@@ -35,5 +36,16 @@ export function addPlaceShipEventListeners() {
         const y = parseInt(cell.dataset.y);
         const ship = Ship(playerBoard.currentLength);
         playerBoard.placeShip(false, 'my-cell', ship, x, y);
+    }));
+}
+
+export function addAttackAIEventListeners() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => cell.addEventListener('click', () => {
+        //computerBoard.receiveAttack(cell.dataset.x, cell.dataset.y)
+        let x = cell.dataset.x
+        let y = cell.dataset.y
+        you.attack(x, y, computerBoard)
+        computer.randomAttack(playerBoard)
     }));
 }
