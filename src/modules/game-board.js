@@ -1,6 +1,5 @@
-import { playerBoard } from '..';
-import { focusShip, renderAvailableShips, updateAxisBtn, clearGrid, setCountersToZero } from './dom-manipulation';
-import { addMyCells } from './event-listeners';
+import { game } from '..';
+import { focusShip, renderAvailableShips, updateAxisBtn, clearGrid, setCountersToZero, addHit, addMiss, updateAnnounce } from './dom-manipulation';
 import { Ship } from './ship';
 
 
@@ -21,6 +20,16 @@ export function GameBoard() {
     let isHorizontal = true
 
     function placeShip(rand, who, ship, x, y) {
+        if (game === 'battle') {
+            updateAnnounce(`You can't attack your own board!`)
+            return
+        }
+
+        if (game === 'over') {
+            alert('Game is over, buddy.')
+            return
+        }
+
         if (currentLength == 0) {
             alert('Pick a ship!')
             return
@@ -43,19 +52,17 @@ export function GameBoard() {
         }
 
         for (let l = 0; l < ship.length; l++) {
+            let attacked = false
             if (isHorizontal) {
-                board[x + l][y] = ship;
+                board[x + l][y] = {ship, attacked};
             } 
             if (!isHorizontal) {
-                board[x][y + l] = ship;
+                board[x][y + l] = {ship, attacked};
             }
             const cell = document.querySelector(`.${who}[data-x="${x + (isHorizontal ? l : 0)}"][data-y="${y + (isHorizontal ? 0 : l)}"]`);
             cell.classList.add('ship-cell'); 
             
         }
-
-        console.log(`${ship.length} ship has been placed.`)
-        
 
         if (rand === false) {
             ships[currentLength] -= 1
@@ -64,6 +71,7 @@ export function GameBoard() {
         renderAvailableShips()
         console.log(ships)
         console.log(board)
+        updateAnnounce(`You just placed ${currentLength}-length ship!`)
     }
 
     function toggleIsHorizontal() {
@@ -128,6 +136,7 @@ export function GameBoard() {
         console.log(ships)
         if (who === 'my-cell') {
             setCountersToZero()
+            updateAnnounce('You just placed all your ships! Start the battle!')
         }
         console.log(board)
 
@@ -155,6 +164,44 @@ export function GameBoard() {
         return true; 
     }
 
+    function receiveAttack(x, y, who) {
+        if (game === 'over') {
+            alert('Game over, buddy. Start a new one.')
+        }
+
+        if (board[x][y] == 'missed') {
+            updateAnnounce('You already missed that!')
+            return
+        }
+
+        if (board[x][y] === null) {
+            missedShots.push({ x, y });
+            board[x][y] = 'missed'
+            addMiss(x, y, who)
+            updateAnnounce('Miss!')
+        } else if (board[x][y] && board[x][y] != 'missed') {
+            if (board[x][y].attacked == true) {
+                updateAnnounce('You already attacked this ship!')
+                return
+            }
+            board[x][y].ship.hit();
+            board[x][y].attacked = true
+            updateAnnounce('HIT!')
+            if (board[x][y].ship.isSunk()) {
+                console.log(`${board[x][y].ship.length}-length ship has been sunk!`);
+                updateAnnounce(`${board[x][y].ship.length}-length ship has been sunk!`)
+            }
+            addHit(x, y, who)
+        }
+        console.log(missedShots)
+        console.log(board[x][y])
+        
+    }
+
+    function areAllShipsSunk() {
+        return board.every(row => row.every(cell => cell === null || cell.attacked || cell === 'missed'));
+    }
+
     return {
         ships,
         board,
@@ -164,6 +211,9 @@ export function GameBoard() {
         getRandomCoordinates,
         placeAllShipsRandomly,
         currentLength,
-        setCurrentLength
+        setCurrentLength,
+        receiveAttack,
+        areAllShipsSunk,
+        missedShots
     };
 }
