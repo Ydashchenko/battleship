@@ -46,7 +46,6 @@ h2, button {
 }
 
 #announcement {
-    display: none;
     justify-items: center;
     gap: 20px;
 }
@@ -86,16 +85,33 @@ label {
     border: 1px rgb(15, 0, 115) solid;
 }
 
+.ship-cell {
+    color: red;
+    text-align: center;
+    font-size: 25px;
+}
+
 .ship-cell.cell {
-    background-color: red;
+    background-color: rgb(15, 0, 115);;
 }
 
 .ship-cell.my-cell {
     background-color: rgb(15, 0, 115);
 }
 
+.missed {
+    background-color: rgb(180, 179, 179);
+    
+}
 
+.hit {
+    background-color: rgb(15, 0, 115);
+}
 
+#info {
+    font-size: 40px;
+    text-align: center;
+}
 
 footer, header  {
     background-color: rgb(15, 0, 115);
