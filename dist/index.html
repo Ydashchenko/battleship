@@ -12,17 +12,10 @@
     </header>
 
     <main>
-        <div id="labels">
-            <h2>You</h2>
-            <button id="start-btn">Start battle!</button>
-            <button id="restart-btn">Restart</button>
-            <h2>AI</h2>
-        </div>
         <div id="boards">
-            <div class="gameboard" id="player-board">
-
-            </div>
             <div id="my-ships">
+                <button id="start-btn">Start battle!</button>
+                <button id="restart-btn">Restart</button>
                 <label>Your battleships:</label>
                 <button id="axis">Current axis - X</button>
                 <div class="ship" id="destroyer">
@@ -57,8 +50,17 @@
                 </div>
                 <button id="random-place">Place randomly</button>
             </div>
-            <div class="gameboard" id="computer-board">
-
+            <div class="player-container">
+                <h2>You</h2>
+                <div class="gameboard" id="player-board">
+    
+                </div>
+            </div>
+            <div class="computer-container">
+                <h2>AI</h2>
+                <div class="gameboard" id="computer-board">
+    
+                </div>
             </div>
         </div>
         <div id="announcement">
