@@ -91,10 +91,6 @@ label {
     font-size: 25px;
 }
 
-.ship-cell.cell {
-    
-}
-
 .ship-cell.my-cell {
     background-color: rgb(15, 0, 115);
 }
